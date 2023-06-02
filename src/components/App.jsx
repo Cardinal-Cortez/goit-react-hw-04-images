@@ -1,16 +1,21 @@
+import { useState } from "react";
+import { Searchbar } from "./Searchbar";
+import { ImageGallery } from "./ImageGallery";
+import css from './App.module.css'
+
 export const App = () => {
-  return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
-  );
-};
+
+  const [search, setSearch] = useState('');
+
+  const handleFormSubmit = (search) => {
+    setSearch({ search });
+  };
+
+    return (
+      <div className={css.App}>
+        <Searchbar onSubmit={handleFormSubmit} />
+        <ImageGallery search={search} />
+      </div>
+    );
+  }
+
