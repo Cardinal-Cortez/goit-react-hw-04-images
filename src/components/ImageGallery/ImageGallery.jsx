@@ -6,20 +6,17 @@ import PropTypes from "prop-types";
 import css from './ImageGallery.module.css';
 import { useState, useEffect} from "react";
 
-export const ImageGallery = ({totalHits, search}) => {
+export const ImageGallery = ({search}) => {
   const [pictures, setPictures] = useState([]);
   const [error, setError] = useState(null);
   const [status, setStatus] = useState('idle');
   const [selectedPicture, setSelectedPicture] = useState(null);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [totalImages, setTotalImages] = useState(totalHits);
+  const [totalImages, setTotalImages] = useState(0);
 
 
   useEffect(() => {
-    setPictures([]);
-    setPage(1);
-    setStatus('pending');
     fetchPictures();
   }, [ page, search])
 
@@ -74,7 +71,6 @@ export const ImageGallery = ({totalHits, search}) => {
   };
 
   const handleLoadMore = () => {
-
     if (pictures.length < totalImages) {
       setPage((prev) => prev + 1); 
       setStatus('pending');
