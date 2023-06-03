@@ -25,6 +25,7 @@ export const Modal = ({ picture, onClose }) => {
   const closeModal = () => {
     setIsopen(false);
     onClose();
+    console.log(picture)
   };
 
   return (

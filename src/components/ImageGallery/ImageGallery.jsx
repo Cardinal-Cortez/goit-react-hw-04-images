@@ -42,7 +42,8 @@ export const ImageGallery = ({totalHits, search}) => {
             return [...prev, ...data.hits]
           });
           setTotalImages(data.totalHits);
-          setStatus("resolved")
+          setStatus("resolved");
+          setLoading(false)
           if (page > 1) {
             const galleryEl = document.querySelector(`.${css.imageGallery}`);
             if (galleryEl) {
@@ -84,19 +85,15 @@ export const ImageGallery = ({totalHits, search}) => {
   };
 
 
-  if (status === 'idle') {
-    return (
-      <h1 style={{ display: 'flex', justifyContent: 'center' }}>
-        Please, read text
-      </h1>
-    );
-  }
-  if (status === 'pending' && pictures.length === 0) {
-        return (
-      <h1 style={{ display: 'flex', justifyContent: 'center' }}>
-        Please, read text
-      </h1>
-    );
+  // if (status === 'idle') {
+  //       return (
+  //     <h1 style={{ display: 'flex', justifyContent: 'center' }}>
+  //       Please, read text
+  //     </h1>      
+  //   );
+  // }
+  if ( loading && pictures.length === 0) { 
+    return <Loader />;
   }
   if (status === 'rejected') {
     return <h2>{error.message}</h2>;
@@ -104,7 +101,6 @@ export const ImageGallery = ({totalHits, search}) => {
   if (status === 'resolved') {
     return (
       <>
-        {loading && <Loader />}
         <ul className={css.imageGallery}>
           {pictures.map((picture) => (
             <ImageGalleryItem

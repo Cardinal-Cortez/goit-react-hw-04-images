@@ -4,7 +4,7 @@ import css from './ImageGalleryItem.module.css'
 export const ImageGalleryItem= ({picture, onImageClick})=> {
 
   const heandleClick = (picture) => {
-        onImageClick(picture);
+    onImageClick(picture);
     };
 
         return (
