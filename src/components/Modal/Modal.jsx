@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import css from './Modal.module.css';
 import PropTypes from "prop-types";
 
-export const Modal = ({ picture, onClose }) => {
+export const Modal = ({ picture, onClose, handleImageClick }) => {
 
   const [isOpen, setIsopen] = useState(false);
 

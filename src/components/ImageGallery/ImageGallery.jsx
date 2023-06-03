@@ -65,7 +65,7 @@ export const ImageGallery = ({totalHits, search}) => {
     }
   }
 
-  const handleImageClick = (pictures) => {
+  const handleImageClick = () => {
     setSelectedPicture(pictures);
   };
 
