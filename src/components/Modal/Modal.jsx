@@ -22,7 +22,7 @@ export const Modal = ({ picture, onClose }) => {
   //   setIsopen(true);
   // };
 
-  const closeModal = (picture) => {
+  const closeModal = () => {
     setIsopen(false);
     onClose();
     console.log(picture)
