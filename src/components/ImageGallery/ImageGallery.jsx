@@ -6,22 +6,22 @@ import PropTypes from "prop-types";
 import css from './ImageGallery.module.css';
 import { useState, useEffect} from "react";
 
-export const ImageGallery = (data) => {
+export const ImageGallery = ({totalHits, search}) => {
   const [pictures, setPictures] = useState([]);
   const [error, setError] = useState(null);
   const [status, setStatus] = useState('idle');
   const [selectedPicture, setSelectedPicture] = useState(null);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [totalImages, setTotalImages] = useState(data.totalHits);
+  const [totalImages, setTotalImages] = useState(totalHits);
 
 
   useEffect(() => {
     setPictures([]);
     setPage(1);
     setStatus('pending');
-    fetchPictures();
-  }, [ page, status])
+    fetchPictures(search);
+  }, [ page, search])
 
 
   const fetchPictures = (search) => {
@@ -92,7 +92,11 @@ export const ImageGallery = (data) => {
     );
   }
   if (status === 'pending' && pictures.length === 0) {
-    return <Loader />;
+        return (
+      <h1 style={{ display: 'flex', justifyContent: 'center' }}>
+        Please, read text
+      </h1>
+    );
   }
   if (status === 'rejected') {
     return <h2>{error.message}</h2>;
@@ -114,7 +118,6 @@ export const ImageGallery = (data) => {
         {selectedPicture && (
           <Modal
             picture={selectedPicture}
-            isOpen={true}
             onClose={handleCloseModal}
           />
         )}

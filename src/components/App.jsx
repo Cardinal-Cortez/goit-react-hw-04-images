@@ -6,15 +6,17 @@ import css from './App.module.css'
 export const App = () => {
 
   const [search, setSearch] = useState('');
+  const [totalHits, setTotalHits] = useState(0);
 
-  const handleFormSubmit = (search) => {
-    setSearch({ search });
+  const handleFormSubmit = (search, totalHits) => {
+    setSearch(search);
+    setTotalHits(totalHits);
   };
 
     return (
       <div className={css.App}>
         <Searchbar onSubmit={handleFormSubmit} />
-        <ImageGallery search={search} />
+        <ImageGallery search={search} totalHits={totalHits} />
       </div>
     );
   }

@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import css from './Button.module.css';
 
-export const ButtonLoadMore = () => {
+export const ButtonLoadMore = ({onLoadMore}) => {
   
-  const handleLoadMore = ({onLoadMore}) => {
+  const handleLoadMore = () => {
     onLoadMore();
   };
 

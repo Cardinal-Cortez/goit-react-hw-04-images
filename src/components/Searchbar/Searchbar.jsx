@@ -2,13 +2,13 @@ import { useState } from "react"
 import css from './Searchbar.module.css';
 import PropTypes from "prop-types";
 
-export const Searchbar = () => {
+export const Searchbar = ({ onSubmit }) => {
     const [search, setSearch] = useState("");
 
     const handleQueryChange = (e) => {
         setSearch(e.currentTarget.value.toLowerCase())
     };
-    const handleSubmit = (e, { onSubmit }) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         if (search.trim() === '') return
         onSubmit(search);

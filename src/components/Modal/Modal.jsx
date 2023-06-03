@@ -2,35 +2,34 @@ import { useState, useEffect } from "react";
 import css from './Modal.module.css';
 import PropTypes from "prop-types";
 
-export const Modal = ({ picture }) => {
+export const Modal = ({ picture, onClose }) => {
 
   const [isOpen, setIsopen] = useState(false);
 
-  useEffect(() => {
-    const handleKeyUp = () => 
+  useEffect(() => { 
+    const onCloseModal = (event) => {
+    if (event.code === 'Escape' || event.target === event.currentTarget) {
+      onClose();
+    }
+  };  
     document.addEventListener("keyup", onCloseModal);
     return () => {
       document.removeEventListener("keyup", onCloseModal);
     };
-  }, []);
+  }, [onClose]);
 
-  const openModal = () => {
-    setIsopen(true);
-  };
+  // const openModal = () => {
+  //   setIsopen(true);
+  // };
 
   const closeModal = () => {
     setIsopen(false);
-  };
-
-  const onCloseModal = (event, { onClose }) => {
-    if (event.code === 'Escape' || event.target === event.currentTarget) {
-      onClose();
-    }
+    onClose();
   };
 
   return (
     <div className={`${css.Overlay} ${isOpen ? "open" : ""}`}
-      onClick={onCloseModal}>
+      onClick={closeModal}>
       <div className={css.Modal}>
         <img src={picture.largeImageURL} alt={picture.tags} />
       </div>
@@ -40,9 +39,8 @@ export const Modal = ({ picture }) => {
 
 Modal.propTypes = {
   picture: PropTypes.shape({
-    largeImageURL: PropTypes.string.isRequired,
-    tags: PropTypes.string.isRequired,
+    largeImageURL: PropTypes.string,
+    tags: PropTypes.string,
   }).isRequired,
-  isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired
 };
