@@ -20,11 +20,11 @@ export const ImageGallery = ({totalHits, search}) => {
     setPictures([]);
     setPage(1);
     setStatus('pending');
-    fetchPictures(search);
+    fetchPictures();
   }, [ page, search])
 
 
-  const fetchPictures = (search) => {
+  const fetchPictures = () => {
 
     if (search) {
       const url = `https://pixabay.com/api/?q=${search}&page=${page}&key=35198425-4c40430781db1dbcd425bce9c&image_type=photo&orientation=horizontal&per_page=12`;
@@ -76,9 +76,7 @@ export const ImageGallery = ({totalHits, search}) => {
   const handleLoadMore = () => {
 
     if (pictures.length < totalImages) {
-      setPage((prev) => {
-        return prev + 1
-      })
+      setPage((prev) => prev + 1); 
       setStatus('pending');
       setLoading(true);
     }
