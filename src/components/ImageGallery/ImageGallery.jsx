@@ -15,7 +15,12 @@ export const ImageGallery = ({ search }) => {
   const [loading, setLoading] = useState(false);
   const [totalImages, setTotalImages] = useState(0);
 
-
+  useEffect(() => {
+    if (search) {
+      setPictures([]);
+      setPage(1);
+    }
+  }, [search]);
   
   useEffect(() => {
   
