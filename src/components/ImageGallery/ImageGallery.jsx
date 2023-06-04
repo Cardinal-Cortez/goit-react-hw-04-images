@@ -46,7 +46,7 @@ export const ImageGallery = ({search}) => {
     }
   }, [page, search]);
 
-  useEffect((page) => {
+  useEffect(() => {
     if (page > 1) {
       const galleryEl = document.querySelector(`.${css.imageGallery}`);
       if (galleryEl) {
@@ -57,10 +57,7 @@ export const ImageGallery = ({search}) => {
         });
       }
     };
-  }, [pictures]);
-
- 
-  
+  }, [page, pictures]);
 
   const handleImageClick = (picture) => {
     setSelectedPicture(picture);
@@ -78,14 +75,6 @@ export const ImageGallery = ({search}) => {
     }
   };
 
-
-  // if (status === 'idle') {
-  //       return (
-  //     <h1 style={{ display: 'flex', justifyContent: 'center' }}>
-  //       Please, read text
-  //     </h1>      
-  //   );
-  // }
   if ( loading && pictures.length === 0) { 
     return <Loader />;
   }
