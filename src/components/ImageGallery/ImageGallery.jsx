@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import css from './ImageGallery.module.css';
 import { useState, useEffect} from "react";
 
-export const ImageGallery = ({search}) => {
+export const ImageGallery = ({ search }) => {
   const [pictures, setPictures] = useState([]);
   const [error, setError] = useState(null);
   const [status, setStatus] = useState('idle');
@@ -16,7 +16,9 @@ export const ImageGallery = ({search}) => {
   const [totalImages, setTotalImages] = useState(0);
 
 
+  
   useEffect(() => {
+  
     if (search) {
       const url = `https://pixabay.com/api/?q=${search}&page=${page}&key=35198425-4c40430781db1dbcd425bce9c&image_type=photo&orientation=horizontal&per_page=12`;
       setLoading(true);
@@ -69,43 +71,41 @@ export const ImageGallery = ({search}) => {
 
   const handleLoadMore = () => {
     if (pictures.length < totalImages) {
-      setPage((prev) => prev + 1); 
+      setPage((prev) => prev + 1);
       setStatus('pending');
       setLoading(true);
     }
   };
 
-  if ( loading && pictures.length === 0) { 
-    return <Loader />;
-  }
-  if (status === 'rejected') {
-    return <h2>{error.message}</h2>;
-  }
-  if (status === 'resolved') {
-    return (
-      <>
-        <ul className={css.imageGallery}>
-          {pictures.map((picture) => (
-            <ImageGalleryItem
-              key={picture.id}
-              picture={picture}
-              onImageClick={handleImageClick}
+  return (
+    <>
+      {loading && pictures.length === 0 && <Loader />}
+      {status === 'rejected' && <h2>{error.message}</h2>}
+      {status === 'resolved' && (
+        <>
+          <ul className={css.imageGallery}>
+            {pictures.map((picture) => (
+              <ImageGalleryItem
+                key={picture.id}
+                picture={picture}
+                onImageClick={handleImageClick}
+              />
+            ))}
+          </ul>
+
+          {selectedPicture && (
+            <Modal
+              picture={selectedPicture}
+              onClose={handleCloseModal}
             />
-          ))}
-        </ul>
-              
-        {selectedPicture && (
-          <Modal
-            picture={selectedPicture}
-            onClose={handleCloseModal}
-          />
-        )}
-        {pictures.length < totalImages && (
-          <ButtonLoadMore onLoadMore={handleLoadMore} />
-        )}
-      </>
-    );
-  }
+          )}
+          {pictures.length < totalImages && (
+            <ButtonLoadMore onLoadMore={handleLoadMore} />
+          )}
+        </>
+      )}
+    </>
+  );
 };
 ImageGallery.propTypes = {
     search: PropTypes.string.isRequired,

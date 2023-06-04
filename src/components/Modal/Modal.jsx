@@ -8,7 +8,7 @@ export const Modal = ({ picture, onClose }) => {
 
   useEffect(() => { 
     const onCloseModal = (event) => {
-    if (event.code === 'Escape' || event.target === event.currentTarget) {
+    if (event.code === 'Escape') {
       onClose();
     }
   };  
@@ -22,10 +22,16 @@ export const Modal = ({ picture, onClose }) => {
     setIsopen(false);
     onClose();
   };
+  const handleOvarlayClick = (event) => {
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+    closeModal()
+  };
 
   return (
     <div className={`${css.Overlay} ${isOpen ? "open" : ""}`}
-      onClick={closeModal}>
+      onClick={handleOvarlayClick}>
       <div className={css.Modal}>
         <img src={picture.largeImageURL} alt={picture.tags} />
       </div>
