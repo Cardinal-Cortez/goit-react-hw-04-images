@@ -17,12 +17,6 @@ export const ImageGallery = ({search}) => {
 
 
   useEffect(() => {
-    fetchPictures();
-  }, [ page, search])
-
-
-  const fetchPictures = () => {
-
     if (search) {
       const url = `https://pixabay.com/api/?q=${search}&page=${page}&key=35198425-4c40430781db1dbcd425bce9c&image_type=photo&orientation=horizontal&per_page=12`;
       setLoading(true);
@@ -41,16 +35,6 @@ export const ImageGallery = ({search}) => {
           setTotalImages(data.totalHits);
           setStatus("resolved");
           setLoading(false)
-          if (page > 1) {
-            const galleryEl = document.querySelector(`.${css.imageGallery}`);
-            if (galleryEl) {
-              const { height: cardHeight } = galleryEl.getBoundingClientRect();
-              window.scrollBy({
-                top: cardHeight * 2,
-                behavior: 'smooth'
-              });
-            }
-          };
         })
         .catch((error) => {
           setError(error);
@@ -60,7 +44,23 @@ export const ImageGallery = ({search}) => {
           setLoading(false);
         });
     }
-  }
+  }, [page, search]);
+
+  useEffect((page) => {
+    if (page > 1) {
+      const galleryEl = document.querySelector(`.${css.imageGallery}`);
+      if (galleryEl) {
+        const { height: cardHeight } = galleryEl.getBoundingClientRect();
+        window.scrollBy({
+          top: cardHeight * 2,
+          behavior: 'smooth'
+        });
+      }
+    };
+  }, [pictures]);
+
+ 
+  
 
   const handleImageClick = (picture) => {
     setSelectedPicture(picture);
